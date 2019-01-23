@@ -12,67 +12,68 @@ import UIKit
 import MapKit
 import CoreLocation
 
-protocol MapViewControllerDelegate: class {
-    func getAddress(_ location: CLLocation, completionHandler: @escaping ((String) -> Void))
-    func confirmUserChosenLocation(_ location: CLLocationCoordinate2D)
-}
-
+/// This class shows user current location on map view. It also lets user pick another location by enabling tap gesture on map view. The selected location is displayed in the text view. In a nutshell, this class handles user interaction with map view.
 class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     let pin = MKPointAnnotation()
     var addressOfDesiredLocation = ""
-    var value: MapViewControllerDelegate?
-    
-    weak var delegate: MapViewControllerDelegate? {
-        get {
-            return value
-        }
-        set {
-            value = newValue
-        }
-    }
-    
     let locationManager = CLLocationManager()
     var myLocation: CLLocationCoordinate2D?
-    let newPin = MKPointAnnotation()
-    private var mapChangedFromUserInteraction = false
     
     @IBOutlet weak var mapView: MKMapView!
     
     @IBOutlet weak var addressTextView: UITextView!
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let textAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
+        navigationController?.navigationBar.tintColor = UIColor.black
+        navigationController?.navigationBar.titleTextAttributes =  textAttributes
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.tintColor = Constants.Colors.base
         customizeBackBarButton()
         setUpLocationManager()
         addTapGestureToTheMap()
     }
     
+    //MARK: Private methods
+    
+    /// Customize BackBarItemButton
     private func customizeBackBarButton() {
         navigationController?.navigationBar.backIndicatorImage = UIImage(named: "nav-address")
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "nav-address")
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .plain, target: nil, action: nil)
     }
     
-    //MARK: Private methods
-    
+    /// Adds tap gesture to Map
     private func addTapGestureToTheMap() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
         tapGesture.delegate = self
         mapView.addGestureRecognizer(tapGesture)
     }
     
+    /// Handle tap on the mapView. User taps on map view to select a new location
+    ///
+    /// - Parameter tapGesture: tap Gesture
     @objc private func handleTap(_ tapGesture: UITapGestureRecognizer) {
         let location = tapGesture.location(in: mapView)
         let newCoordinates = mapView.convert(location, toCoordinateFrom: mapView)
         let newLocation = CLLocation(latitude: newCoordinates.latitude, longitude: newCoordinates.longitude)
+        if (myLocation?.latitude != newCoordinates.latitude || myLocation?.longitude != newCoordinates.longitude) {
+            myLocation?.latitude = newCoordinates.latitude
+            myLocation?.longitude = newCoordinates.longitude
+        }
         populateAddressTextViewPerNewLocation(newLocation)
         centerMap(coordinates: newCoordinates, spanX: mapView.region.span.latitudeDelta, spanY: mapView.region.span.longitudeDelta)
     }
     
+    /// Populate Address Text View with selected location
+    ///
+    /// - Parameter newLocation: new selected location
     private func populateAddressTextViewPerNewLocation(_ newLocation: CLLocation){
-        delegate?.getAddress(newLocation, completionHandler: { (address) in
+        MapViewModel.getAddress(newLocation, completionHandler: { (address) in
             self.addressTextView.textColor = UIColor.black
             
             if (address != self.addressOfDesiredLocation) {
@@ -83,6 +84,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         })
     }
     
+    /// Setting up location manager to get user's current location
     private func setUpLocationManager() {
         //Ask for permission, when in foreground
         locationManager.requestWhenInUseAuthorization()
@@ -103,6 +105,12 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    /// Centers the map using coordinates
+    ///
+    /// - Parameters:
+    ///   - coordinates: location coordinates
+    ///   - spanX: amount of span for how much to zoom in x-coordinate
+    ///   - spanY: amount of span for how much to zoom in y-coordinate
     fileprivate func centerMap(coordinates: CLLocationCoordinate2D, spanX: Double?, spanY: Double?) {
         mapView.removeAnnotation(pin)
         myLocation = coordinates
@@ -114,17 +122,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
         pin.coordinate = coordinates
         mapView.addAnnotation(pin)
     }
-    
-    
-    /// Handles logic for when address is confirmed in Map
-    ///
-    /// - Parameter sender: Location details from the map click
-//    @IBAction func confirmAddressButtonClicked(_ sender: Any) {
-//        guard myLocation != nil else {
-//            return
-//        }
-//        delegate?.confirmUserChosenLocation(myLocation!)
-//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "mapToRestaurantsList" {
@@ -138,6 +135,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     }
 }
 
+//MARK: MKMapViewDelegate and CLLocationManagerDelegate methods
 extension MapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
     
     internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -145,7 +143,6 @@ extension MapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
         guard let newLocation = locations.first else {
             return
         }
-        
         populateAddressTextViewPerNewLocation(newLocation)
         centerMap(coordinates: newLocation.coordinate, spanX: nil, spanY: nil)
     }
@@ -170,7 +167,7 @@ extension MapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
     }
     
     func mapView(_ mapView: MKMapView, regionWillChangeAnimated animated: Bool) {
-        mapChangedFromUserInteraction = mapViewRegionDidChangeFromUserInteraction()
+        let _ = mapViewRegionDidChangeFromUserInteraction()
         
     }
     

@@ -25,6 +25,9 @@
 		D7112FAE21F40EA6005B414F /* RestaurantCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D7112FAD21F40EA6005B414F /* RestaurantCell.xib */; };
 		D7112FB121F40ED4005B414F /* RestaurantCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7112FB021F40ED4005B414F /* RestaurantCell.swift */; };
 		D7112FB521F42FCE005B414F /* UIViewController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7112FB421F42FCE005B414F /* UIViewController+.swift */; };
+		D7112FB721F8AB40005B414F /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7112FB621F8AB40005B414F /* MapViewModel.swift */; };
+		D7112FB921F8ABA5005B414F /* Double+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7112FB821F8ABA5005B414F /* Double+.swift */; };
+		D7112FBB21F8ABF6005B414F /* FavoritesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7112FBA21F8ABF6005B414F /* FavoritesListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +77,9 @@
 		D7112FAD21F40EA6005B414F /* RestaurantCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RestaurantCell.xib; sourceTree = "<group>"; };
 		D7112FB021F40ED4005B414F /* RestaurantCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestaurantCell.swift; sourceTree = "<group>"; };
 		D7112FB421F42FCE005B414F /* UIViewController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+.swift"; sourceTree = "<group>"; };
+		D7112FB621F8AB40005B414F /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		D7112FB821F8ABA5005B414F /* Double+.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+.swift"; sourceTree = "<group>"; };
+		D7112FBA21F8ABF6005B414F /* FavoritesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesListViewController.swift; sourceTree = "<group>"; };
 		FDCC4C5B428C79BFAB9AA222 /* Pods-DoorDashAssignmentTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DoorDashAssignmentTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DoorDashAssignmentTests/Pods-DoorDashAssignmentTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -182,6 +188,7 @@
 			children = (
 				D7112F6F21F3FBB0005B414F /* MapViewController.swift */,
 				D7112F9F21F3FEBA005B414F /* RestaurantListViewController.swift */,
+				D7112FBA21F8ABF6005B414F /* FavoritesListViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -191,6 +198,7 @@
 			children = (
 				D7112FA221F40BD2005B414F /* Constants.swift */,
 				D7112FB421F42FCE005B414F /* UIViewController+.swift */,
+				D7112FB821F8ABA5005B414F /* Double+.swift */,
 			);
 			path = "Helper Classes";
 			sourceTree = "<group>";
@@ -215,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				D7112FA721F40D45005B414F /* Restaurant.swift */,
+				D7112FB621F8AB40005B414F /* MapViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -455,9 +464,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				D7112FB121F40ED4005B414F /* RestaurantCell.swift in Sources */,
+				D7112FB721F8AB40005B414F /* MapViewModel.swift in Sources */,
 				D7112FA821F40D45005B414F /* Restaurant.swift in Sources */,
 				D7112FA321F40BD2005B414F /* Constants.swift in Sources */,
+				D7112FB921F8ABA5005B414F /* Double+.swift in Sources */,
 				D7112FAC21F40DD7005B414F /* NetworkProcessor.swift in Sources */,
+				D7112FBB21F8ABF6005B414F /* FavoritesListViewController.swift in Sources */,
 				D7112FA021F3FEBA005B414F /* RestaurantListViewController.swift in Sources */,
 				D7112FAA21F40D56005B414F /* RestaurentViewModel.swift in Sources */,
 				D7112F7021F3FBB0005B414F /* MapViewController.swift in Sources */,
@@ -641,7 +653,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F9SPFQ3WCK;
 				INFOPLIST_FILE = DoorDashAssignment/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cocoateam.DoorDashAssignment;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -657,7 +672,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F9SPFQ3WCK;
 				INFOPLIST_FILE = DoorDashAssignment/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cocoateam.DoorDashAssignment;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -674,7 +692,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F9SPFQ3WCK;
 				INFOPLIST_FILE = DoorDashAssignmentTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cocoateam.DoorDashAssignmentTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -692,7 +714,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F9SPFQ3WCK;
 				INFOPLIST_FILE = DoorDashAssignmentTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cocoateam.DoorDashAssignmentTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -709,7 +735,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F9SPFQ3WCK;
 				INFOPLIST_FILE = DoorDashAssignmentUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cocoateam.DoorDashAssignmentUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -726,7 +756,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = F9SPFQ3WCK;
 				INFOPLIST_FILE = DoorDashAssignmentUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cocoateam.DoorDashAssignmentUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

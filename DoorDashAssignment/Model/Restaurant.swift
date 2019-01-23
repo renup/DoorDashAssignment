@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Restaurant Model Object
 struct Restaurant: Decodable {
     
     enum CodingKeys: String, CodingKey {
@@ -25,6 +26,6 @@ struct Restaurant: Decodable {
     var description: String?
 }
 
-class Business: Decodable {
+struct Business: Decodable {
     var name: String?
 }

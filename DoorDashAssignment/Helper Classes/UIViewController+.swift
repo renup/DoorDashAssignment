@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+// MARK: - UIViewController extension to show error alert and other additional helper methods
 extension UIViewController {
     func showError(_ title: String, message: String) {
         let alertController = UIAlertController(title: title,
@@ -18,4 +19,14 @@ extension UIViewController {
         alertController.addAction(OKAction)
         present(alertController, animated: true, completion: nil)
     }
+    
+    //    func changeNavBarTitleColorToBlack() {
+    //        let attrs = [
+    //            NSAttributedString.Key.foregroundColor: UIColor.black,
+    ////            NSAttributedString.Key.font: UIFont(name: "Georgia-Bold", size: 18)!
+    //        ]
+    //        parent?.navigationController?.navigationBar.titleTextAttributes = attrs
+    //    }
+    
+    
 }

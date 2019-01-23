@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+/// App related constants
 struct Constants {
     struct Colors {
         static let base = UIColor(red: 255.0/255.0, green: 0/255.0, blue: 36.0/255.0, alpha: 1)
