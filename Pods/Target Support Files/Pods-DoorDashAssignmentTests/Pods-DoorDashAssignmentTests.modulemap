@@ -1,0 +1,6 @@
+framework module Pods_DoorDashAssignmentTests {
+  umbrella header "Pods-DoorDashAssignmentTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

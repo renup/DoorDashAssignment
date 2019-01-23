@@ -15,14 +15,16 @@ struct Restaurant: Decodable {
         case deliveryFee = "delivery_fee"
         case coverImageURLString = "cover_img_url"
         case business
+        case description
     }
     
-     var asapTime : Int
-     var deliveryFee: Double
-     var coverImageURLString: String
-     var business: Business
+    var asapTime : Int?
+    var deliveryFee: Double?
+    var coverImageURLString: String?
+    var business: Business?
+    var description: String?
 }
 
 class Business: Decodable {
-    var name: String
+    var name: String?
 }

@@ -20,7 +20,7 @@ final class NetworkProcessor {
     //https://api.doordash.com/v1/store_search/?lat=37.42274&lng=-122.139956
     func getRestaurants(lat: Double, lng: Double, completion: @escaping RestaurantListResponse) {
         let searchRestaurantsURLString = Constants.API.rootURL + Constants.API.storeSearch
-       
+       dataTask?.cancel()
         if var urlComponents = URLComponents(string: searchRestaurantsURLString) {
             let latQueryItem = URLQueryItem(name: "lat", value: String(describing: lat))
             let lngQueryItem = URLQueryItem(name: "lng", value: String(describing: lng))
