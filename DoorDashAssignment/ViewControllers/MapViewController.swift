@@ -125,12 +125,12 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "mapToRestaurantsList" {
-            guard let vc = segue.destination as? UITabBarController, let navigationVC = vc.viewControllers?.first as? UINavigationController, let restaurantListVC = navigationVC.viewControllers.first as? RestaurantListViewController else {
+            guard let vc = segue.destination as? UITabBarController, let restaurantListVC = vc.viewControllers?.first as? RestaurantListViewController else {
                 assertionFailure("Pleace check the navigation to RestaurantVC from MapVC")
                 return
             }
-            restaurantListVC.latitude = Double(myLocation?.latitude ?? 0.0)
-            restaurantListVC.longitude = Double (myLocation?.longitude ?? 0.0)
+            restaurantListVC.latitude = myLocation?.latitude ?? 0.0
+            restaurantListVC.longitude = myLocation?.longitude ?? 0.0
         }
     }
 }
