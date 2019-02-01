@@ -16,6 +16,7 @@ final class RestaurantCell: UITableViewCell {
     @IBOutlet weak var cuisineTypeLabel: UILabel!
     @IBOutlet weak var restaurantNameLabel: UILabel!
     @IBOutlet weak var coverImageView: UIImageView!
+    var dataTask: URLSessionTask?
     
     /// Configure the RestaurantCell using Restaurant object
     ///
@@ -23,7 +24,7 @@ final class RestaurantCell: UITableViewCell {
     func configureCell(restaurant: Restaurant) {
         coverImageView.image = UIImage(named: "food_icon")
         if let imageURLString = restaurant.coverImageURLString {
-            RestaurantViewModel.fetchImage(urlString: imageURLString) { (img, error) in
+         dataTask = RestaurantViewModel.fetchImage(urlString: imageURLString) { (img, error) in
                 if let image = img {
                     self.coverImageView.image = image
                 }
@@ -54,6 +55,20 @@ final class RestaurantCell: UITableViewCell {
         if let business = restaurant.business, let name = business.name {
             restaurantNameLabel.text = name
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        dataTask?.cancel()
+        resetValues()
+    }
+    
+    private func resetValues() {
+        deliveryFeeLabel.text = nil
+        deliveryTimeLabel.text = nil
+        coverImageView.image = nil
+        restaurantNameLabel.text = nil
+        cuisineTypeLabel.text = nil
     }
     
 }

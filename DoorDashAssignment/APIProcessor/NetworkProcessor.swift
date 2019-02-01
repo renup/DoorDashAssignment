@@ -18,9 +18,9 @@ final class NetworkProcessor {
     static let shared = NetworkProcessor()
     private init() { }
     
-    let imageCache = NSCache<NSString, AnyObject>()
+    var imageCache = NSCache<NSString, AnyObject>()
     let session = URLSession(configuration: .default)
-    var dataTask: URLSessionDataTask?
+//    var dataTask: URLSessionDataTask?
     
     
     // Example: https://api.doordash.com/v1/store_search/?lat=37.42274&lng=-122.139956
@@ -32,7 +32,7 @@ final class NetworkProcessor {
     ///   - completion: completion handler for response received from api call
     func getRestaurants(lat: String, lng: String, completion: @escaping RestaurantListResponse) {
         let searchRestaurantsURLString = Constants.API.rootURL + Constants.API.storeSearch
-        dataTask?.cancel()
+//        dataTask?.cancel()
         
         if var urlComponents = URLComponents(string: searchRestaurantsURLString) {
             let latQueryItem = URLQueryItem(name: "lat", value: lat)
@@ -41,8 +41,7 @@ final class NetworkProcessor {
             urlComponents.queryItems = [latQueryItem, lngQueryItem]
             
             guard let url = urlComponents.url else { return }
-            dataTask = session.dataTask(with: url, completionHandler: { (data, response, error) in
-                defer { self.dataTask = nil }
+            let dataTask = session.dataTask(with: url, completionHandler: { (data, response, error) in
                 if let err = error {
                     completion(nil, err)
                 } else if let data = data {
@@ -59,8 +58,8 @@ final class NetworkProcessor {
                     completion(nil, error)
                 }
             })
+            dataTask.resume()
         }
-        dataTask?.resume()
         
     }
     
@@ -69,25 +68,22 @@ final class NetworkProcessor {
     /// - Parameters:
     ///   - urlString: url String for image
     ///   - completion: completion handler for response received from the api call
-    func getImage(urlString: String, completion: @escaping  ImageResponse) {
+    func getImage(urlString: String, completion: @escaping  ImageResponse) -> URLSessionTask? {
         
         if let cachedImage = imageCache.object(forKey: urlString as NSString) as? UIImage {
             completion(cachedImage, nil)
-            return
+            return nil
         }
-        
-        dataTask?.cancel()
         
         guard let url = URL(string: urlString) else {
             #if DEBUG
             print("Invalid image url string found during fetching image")
             #endif
-            return
+            return nil
         }
         
-        dataTask = session.dataTask(with: url, completionHandler: { (data, response, error) in
-            defer { self.dataTask = nil }
-            
+        let dataTask = session.dataTask(with: url, completionHandler: {[weak self] (data, response, error) in
+            guard let `self` = self else { return }
             if let error = error {
                 completion(nil, error)
             } else if let data = data, let image = UIImage(data: data) {
@@ -97,7 +93,8 @@ final class NetworkProcessor {
                 completion(nil, error)
             }
         })
-        dataTask?.resume()
+        dataTask.resume()
+        return dataTask
     }
     
 }

@@ -35,9 +35,9 @@ final class RestaurantViewModel: NSObject {
     /// - Parameters:
     ///   - urlString: image url in String format
     ///   - completion: completion handler for image fetch call
-    static func fetchImage(urlString: String, completion: @escaping ImageResponse) {
+    static func fetchImage(urlString: String, completion: @escaping ImageResponse) -> URLSessionTask? {
         
-        NetworkProcessor.shared.getImage(urlString: urlString) { (image, error) in
+       return NetworkProcessor.shared.getImage(urlString: urlString) { (image, error) in
             DispatchQueue.main.async {
                 if image != nil {
                     completion(image, nil)
