@@ -20,13 +20,4 @@ extension UIViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    //    func changeNavBarTitleColorToBlack() {
-    //        let attrs = [
-    //            NSAttributedString.Key.foregroundColor: UIColor.black,
-    ////            NSAttributedString.Key.font: UIFont(name: "Georgia-Bold", size: 18)!
-    //        ]
-    //        parent?.navigationController?.navigationBar.titleTextAttributes = attrs
-    //    }
-    
-    
 }
